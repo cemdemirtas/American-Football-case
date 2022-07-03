@@ -17,9 +17,9 @@ TagManager:
   - Player
   - ChunkSpawner
   - FinishSpawner
-  - 
-  - 
-  - 
+  - FinishPointTeammate
+  - Enemy
+  - FinishPointEnemy
   - 
   - 
   - 

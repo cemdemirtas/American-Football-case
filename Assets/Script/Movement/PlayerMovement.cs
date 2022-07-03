@@ -5,39 +5,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static PlayerMovement instance;
     Touch touch;
     Quaternion BeginRotation;
     Vector3 BeginPosition;
     [SerializeField] Transform ChunkSpawnerPoint;
     [SerializeField] Transform FinishPoint;
     float forwardSpeed = 5;
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.collider.gameObject.layer == LayerMask.NameToLayer("ChunkSpawner"))
-    //    {
-    //        Debug.Log("Touched a ChunkSpawner");
-    //        PoolingManager.instance.SpawnFromPool("Chunk", ChunkSpawnerPoint.position, Quaternion.Euler(0, 0, 0));
-    //        ChunkSpawnerPoint.transform.Translate(new Vector3(0, 0, 40f));
-    //    }
+    Animator animator;
 
-    //}
-    private void OnTriggerEnter(Collider other)
+    private void Awake()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("ChunkSpawner"))
+        if (instance==null)
         {
-            Debug.Log("Touched a ChunkSpawner");
-            PoolingManager.instance.SpawnFromPool("Chunk", ChunkSpawnerPoint.position, Quaternion.Euler(0, 0, 0));
-            ChunkSpawnerPoint.transform.Translate(new Vector3(0, 0, 40f));
-        } 
-        
-        if (other.gameObject.layer == LayerMask.NameToLayer("FinishSpawner"))
-        {
-            Debug.Log("Touched a FinishSpawner");
-            PoolingManager.instance.SpawnFromPool("EndPlatform", FinishPoint.position, Quaternion.Euler(0, 0, 0));
+            instance = this;
         }
     }
+
     private void Start()
     {
+        animator = GetComponent<Animator>();
         BeginRotation = Quaternion.identity;
         BeginPosition = transform.position;
     }
@@ -57,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
+
+          
             if (touch.phase == TouchPhase.Stationary)
             {
                 transform.DOMoveX(-1.5f, 0.5f); //left lane
@@ -70,6 +59,28 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("ChunkSpawner"))
+        {
+            PoolingManager.instance.SpawnFromPool("Chunk", ChunkSpawnerPoint.position, Quaternion.Euler(0, 0, 0));
+            ChunkSpawnerPoint.transform.Translate(new Vector3(0, 0, 20f));
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("FinishSpawner"))
+        {
+            PoolingManager.instance.SpawnFromPool("EndPlatform", FinishPoint.position, Quaternion.Euler(0, 0, 0));
+        }  
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        {
+            //GetComponent<CapsuleCollider>().enabled = false;
+            animator.enabled = false;
+            Ragdoll.instance.SetRagdoll(true, false);
+            this.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        }
+    }
+
 
 }
 

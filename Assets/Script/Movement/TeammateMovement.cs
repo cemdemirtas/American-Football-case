@@ -13,6 +13,7 @@ public class TeammateMovement : MonoBehaviour
     private void Awake()
     {
         BeginPoint = new Vector3(transform.position.x, -0.72f, transform.position.z);
+        BeginPoint = transform.position;
 
     }
     private void Start()
@@ -27,14 +28,12 @@ public class TeammateMovement : MonoBehaviour
         {
             Debug.Log("finishhh");
             gameObject.SetActive(false);
-            //PoolingManager.instance.SpawnFromPool("Teammate", spawnPoint.position, Quaternion.Euler(0, 0, 0));
-            PoolingManager.instance.SpawnFromPool("Teammate", new Vector3(spawnPoint.position.x, -0.72f, spawnPoint.position.z), Quaternion.Euler(0, 0, 0));
-
+            PoolingManager.instance.SpawnFromPool("Teammate", spawnPoint.position, Quaternion.Euler(0, 0, 0));
         }
     }
     private void Update()
     {
-        //transform.position = new Vector3(transform.position.x, BeginPoint.y, transform.position.z);
+        transform.position = new Vector3(transform.position.x, BeginPoint.y, transform.position.z);
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
 

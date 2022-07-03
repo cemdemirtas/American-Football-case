@@ -13,7 +13,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
-        BeginPoint = new Vector3(transform.position.x, -0.53f, transform.position.z);
+        BeginPoint = new Vector3(transform.position.x, -0.9f, transform.position.z);
+        BeginPoint = transform.position;
 
     }
     private void Start()
@@ -31,13 +32,12 @@ public class EnemyMovement : MonoBehaviour
         {
             Debug.Log("finishhh");
             gameObject.SetActive(false);
-            //PoolingManager.instance.SpawnFromPool("Opponent", spawnPoint.position, Quaternion.Euler(0, -180, 0));
-            PoolingManager.instance.SpawnFromPool("Opponent", new Vector3(spawnPoint.position.x, -0.53f, spawnPoint.position.z), Quaternion.Euler(0, -180, 0));
+            PoolingManager.instance.SpawnFromPool("Opponent", spawnPoint.position, Quaternion.Euler(0, -180, 0));
         }
     }
     private void Update()
     {
-        //transform.position = new Vector3(transform.position.x, -0.53f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, BeginPoint.y, transform.position.z);
 
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }

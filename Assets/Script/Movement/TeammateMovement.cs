@@ -15,7 +15,7 @@ public class TeammateMovement : MonoBehaviour
     }
 
 
-    public void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {

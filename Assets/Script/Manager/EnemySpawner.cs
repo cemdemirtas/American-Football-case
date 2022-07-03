@@ -11,6 +11,6 @@ public class EnemySpawner : EnemyMovement
     void OpponentSpawn(EnemyMovement enemyMovement)
     {
         _enemymovement = enemyMovement;
-        _enemymovement.OnCollisionEnter(_enemymovement.gameObject.GetComponent<Collision>());
+        _enemymovement.Deactive();
     }
 }

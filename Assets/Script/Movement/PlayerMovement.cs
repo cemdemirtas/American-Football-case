@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
         }  
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
-            //GetComponent<CapsuleCollider>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
             animator.enabled = false;
             Ragdoll.instance.SetRagdoll(true, false);
             this.gameObject.GetComponent<PlayerMovement>().enabled = false;

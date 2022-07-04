@@ -23,17 +23,18 @@ public class EnemyMovement : MonoBehaviour
     }
 
 
- 
 
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("FinishPointEnemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointEnemy"))
         {
             Debug.Log("finishhh");
             gameObject.SetActive(false);
             PoolingManager.instance.SpawnFromPool("Opponent", spawnPoint.position, Quaternion.Euler(0, -180, 0));
         }
+
     }
     private void Update()
     {

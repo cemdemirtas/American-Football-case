@@ -467,7 +467,7 @@ PrefabInstance:
     - target: {fileID: 5805044337824023981, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5805044337824023983, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
@@ -559,6 +559,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MuscularCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599200931096928931, guid: 7d2106df29d234f4b9faeac4b5658d90,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599200931096928931, guid: 7d2106df29d234f4b9faeac4b5658d90,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d2106df29d234f4b9faeac4b5658d90, type: 3}
@@ -834,6 +844,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MuscularCharacter
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599200931096928931, guid: 7d2106df29d234f4b9faeac4b5658d90,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 4599200931096928931, guid: 7d2106df29d234f4b9faeac4b5658d90,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d2106df29d234f4b9faeac4b5658d90, type: 3}
@@ -5948,7 +5968,7 @@ PrefabInstance:
     - target: {fileID: 5805044337824023981, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5805044337824023983, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}

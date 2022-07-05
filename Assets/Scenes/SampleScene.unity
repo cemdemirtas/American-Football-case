@@ -134,15 +134,9 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 81b969b5692293e4482205900485a100, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:RightToeBase'\n\tTransform
-    'mixamorig:LeftUpLeg'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform 'mixamorig:RightHand'\n\tTransform
-    'mixamorig:LeftArm'\n\tTransform 'mixamorig:Spine1'\n\tTransform 'mixamorig:RightUpLeg'\n\tTransform
-    'mixamorig:LeftForeArm'\n\tTransform 'mixamorig:LeftLeg'\n\tand more ...\n\tFrom
-    animation clip 'Win3'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -896,7 +890,7 @@ PrefabInstance:
     - target: {fileID: 5805044337824023979, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 36.45
+      value: 37.53
       objectReference: {fileID: 0}
     - target: {fileID: 5805044337824023979, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
@@ -941,7 +935,7 @@ PrefabInstance:
     - target: {fileID: 5805044337824023981, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5805044337824023982, guid: 576976ebf38ca054f9b452a4969e38b7,
         type: 3}
@@ -2000,6 +1994,7 @@ GameObject:
   - component: {fileID: 919132147848318748}
   - component: {fileID: 919132147848318749}
   - component: {fileID: 919132147848318750}
+  - component: {fileID: 919132147848318751}
   m_Layer: 9
   m_Name: BaseCharacter
   m_TagString: Untagged
@@ -2021,6 +2016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ChunkSpawnerPoint: {fileID: 773045908}
   FinishPoint: {fileID: 8142657973456164127}
+  animator: {fileID: 0}
 --- !u!114 &919132147848318749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2049,6 +2045,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 3
+--- !u!114 &919132147848318751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132147848318747}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adad19ca7bced3a4e99cedb0df9b725e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &919132148872338263
 GameObject:
   m_ObjectHideFlags: 0
@@ -45723,7 +45731,7 @@ PrefabInstance:
     - target: {fileID: 4053834523364518292, guid: 3737199b8dcb491418f6a60f9ed91575,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3737199b8dcb491418f6a60f9ed91575, type: 3}

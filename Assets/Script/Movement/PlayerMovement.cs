@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerMovement : MonoBehaviour
 {
     public static PlayerMovement instance;
@@ -13,12 +12,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform ChunkSpawnerPoint;
     [SerializeField] Transform FinishPoint;
     float forwardSpeed = 5;
-    Animator animator;
+    public Animator animator;
+    int RandomAnim;
 
 
     private void Awake()
     {
-        ObserverEvents.MovementEvent += Movement; //event handler
 
         if (instance == null)
         {
@@ -38,14 +37,16 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
+        ObserverEvents.CallMovement();
+        RandomAnim = UnityEngine.Random.Range(1, 2);
 
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
     }
 
 
-   public void Movement()
+    public void Movement()
     {
-       
+        AnimationManager.instance.runAnim();
+        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -85,8 +86,9 @@ public class PlayerMovement : MonoBehaviour
         }
         if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointPlayer"))
         {
-            //MovementEvent -= Movement; //event handler
-            Debug.Log("finish");
+            ObserverEvents.StopMovement();
+
+
         }
     }
 

@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,12 @@ public class PlayerMovement : MonoBehaviour
     float forwardSpeed = 5;
     Animator animator;
 
+
     private void Awake()
     {
-        if (instance==null)
+        ObserverEvents.MovementEvent += Movement; //event handler
+
+        if (instance == null)
         {
             instance = this;
         }
@@ -34,18 +38,19 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        Movement();
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
 
+        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
     }
 
-    void Movement()
+
+   public void Movement()
     {
+       
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-          
+
             if (touch.phase == TouchPhase.Stationary)
             {
                 transform.DOMoveX(-1.5f, 0.5f); //left lane
@@ -71,15 +76,17 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("FinishSpawner"))
         {
             PoolingManager.instance.SpawnFromPool("EndPlatform", FinishPoint.position, Quaternion.Euler(0, 0, 0));
-        }  
+        }
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             this.gameObject.GetComponent<PlayerMovement>().enabled = false;
-
-            //Destroy(this.transform.GetComponent<Rigidbody>());
             Ragdoll.instance.SetRagdoll(false, true);
-            //GetComponent<CapsuleCollider>().enabled = false;
             animator.enabled = false;
+        }
+        if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointPlayer"))
+        {
+            //MovementEvent -= Movement; //event handler
+            Debug.Log("finish");
         }
     }
 

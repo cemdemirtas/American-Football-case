@@ -35,6 +35,8 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         BeginRotation = Quaternion.identity;
         BeginPosition = transform.position;
+        forwardSpeed = 0; // began velocity
+
     }
     private void LateUpdate()
     {
@@ -65,16 +67,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.DOMoveX(-1.5f, 0.5f); //left lane
                 transform.DOLocalRotate(new Vector3(0, 0, 10f), 0.5f); // Bending by z axis
-                //InvokeRepeating("particleEffects", 1, 20);
-                
-
             }
 
             if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
                 transform.DOMoveX(BeginPosition.x, 0.5f); //right lane
                 transform.DORotateQuaternion(BeginRotation, 1f); // return begin rotation while break touch
-                //StartCoroutine(StopParticleEffects()); 
             }
         }
     }
@@ -104,6 +102,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointPlayer"))  //win state
         {
             ObserverEvents.StopMovement();
+            GameManager.Instance.gamestate = GameManager.GameState.Next; //When we complete level, show next level panel.
+
         }
     }
     void GameOverState()
@@ -127,5 +127,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
 }
+
 }
 

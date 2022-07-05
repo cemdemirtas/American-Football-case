@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public GameObject StartP, InGameP, NextP, GameOverP;
-    public float countdown = 2.0f; 
+    public float countdown = 2.0f;
     [SerializeField] private int asynSceneIndex = 1;
     public enum GameState // we arrange state and panels
     {
@@ -83,6 +83,7 @@ public class GameManager : Singleton<GameManager>
 
 
     }
+
     void InGame()
     {
         PanelController(Panels.InGamep);
@@ -90,14 +91,24 @@ public class GameManager : Singleton<GameManager>
     }
     void Next()
     {
-        PanelController(Panels.Nextp);
+
+        countdown -= Time.deltaTime;
+        if (countdown < 0)
+        {
+            PanelController(Panels.Nextp);
+            countdown = 2.5f;
+
+        }
+
+
+
 
     }
     void GameOver()
     {
         countdown -= Time.deltaTime;
         if (countdown < 0)
-        { 
+        {
             PanelController(Panels.GameOverp);
             countdown = 2.5f;
 

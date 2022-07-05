@@ -7,6 +7,7 @@ public class ObserverEvents : MonoBehaviour
 {
     public static event Action MovementEvent;
 
+
     private void Start()
     {
         MovementEvent += CallMovement;

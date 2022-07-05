@@ -11,9 +11,14 @@ public class PlayerMovement : MonoBehaviour
     Vector3 BeginPosition;
     [SerializeField] Transform ChunkSpawnerPoint;
     [SerializeField] Transform FinishPoint;
-    float forwardSpeed = 5;
+    [SerializeField] float forwardSpeed = 5;
     public Animator animator;
     int RandomAnim;
+    bool isGameOver;
+
+   [SerializeField] ParticleSystem RunDust;
+   [SerializeField] ParticleSystem SpeedWind;
+    
 
 
     private void Awake()
@@ -37,16 +42,20 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Update()
     {
-        ObserverEvents.CallMovement();
-        RandomAnim = UnityEngine.Random.Range(1, 2);
-
+        forwardSpeedControl();
+        ObserverEvents.CallMovement(); // Movement Event 
+        IncreaseSpeed(); //when we slide left lane, show speedWind & dust
     }
 
-
+    void forwardSpeedControl()
+    {
+        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
+    }
     public void Movement()
     {
         AnimationManager.instance.runAnim();
-        transform.Translate(Vector3.forward * forwardSpeed * Time.deltaTime);
+        
+        
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -56,42 +65,67 @@ public class PlayerMovement : MonoBehaviour
             {
                 transform.DOMoveX(-1.5f, 0.5f); //left lane
                 transform.DOLocalRotate(new Vector3(0, 0, 10f), 0.5f); // Bending by z axis
+                //InvokeRepeating("particleEffects", 1, 20);
+                
+
             }
 
             if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {
                 transform.DOMoveX(BeginPosition.x, 0.5f); //right lane
                 transform.DORotateQuaternion(BeginRotation, 1f); // return begin rotation while break touch
+                //StartCoroutine(StopParticleEffects()); 
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("ChunkSpawner"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("ChunkSpawner")) // Chunk pooler
         {
             PoolingManager.instance.SpawnFromPool("Chunk", ChunkSpawnerPoint.position, Quaternion.Euler(0, 0, 0));
             ChunkSpawnerPoint.transform.Translate(new Vector3(0, 0, 20f));
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("FinishSpawner"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("FinishSpawner")) //Finish Chunk pooler
         {
             PoolingManager.instance.SpawnFromPool("EndPlatform", FinishPoint.position, Quaternion.Euler(0, 0, 0));
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy")) //game over states
         {
             this.gameObject.GetComponent<PlayerMovement>().enabled = false;
             Ragdoll.instance.SetRagdoll(false, true);
             animator.enabled = false;
+            if (isGameOver == false)
+            {
+                GameOverState();
+            }
         }
-        if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointPlayer"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("FinishPointPlayer"))  //win state
         {
             ObserverEvents.StopMovement();
-
-
         }
     }
+    void GameOverState()
+    {
+        isGameOver = true; //Control bool parameter
+        GameManager.Instance.gamestate = GameManager.GameState.GameOver; //When we Hit the Enemy, show game over panel.
+    }
+    void IncreaseSpeed()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RunDust.Play();
+            SpeedWind.Play();
+            forwardSpeed+=forwardSpeed*100/100; //Boost %100 speed
+        }  
+        if (Input.GetMouseButtonUp(0))
+        {
+            RunDust.Stop();
+            SpeedWind.Stop();
+            forwardSpeed = 5f;// return normal speed
+        }
 
-
+}
 }
 
